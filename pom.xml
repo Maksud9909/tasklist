@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.8</version>
+		<version>3.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -13,9 +13,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tasklist</name>
 	<description>To do list with email</description>
+
 	<properties>
 		<java.version>17</java.version>
+		<lombok.version>1.18.24</lombok.version>
+		<postgresql.version>42.5.1</postgresql.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -34,11 +38,13 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
+			<version>${postgresql.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+			<version>${lombok.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
