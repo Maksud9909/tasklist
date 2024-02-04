@@ -23,5 +23,4 @@ public class User {
 
     private List<Task>tasks; // list of tasks
 
-
 }
