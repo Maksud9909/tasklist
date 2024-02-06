@@ -9,7 +9,7 @@ import java.util.Set;
 @Data // она за нас пишет getter,setter,toString,equals,hashcode,constructor
 public class User {
 
-    private long id;
+    private Long id;
 
     private String name;
 

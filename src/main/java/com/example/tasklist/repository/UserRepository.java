@@ -2,15 +2,13 @@ package com.example.tasklist.repository;
 
 import com.example.tasklist.domain.user.Role;
 import com.example.tasklist.domain.user.User;
-import org.springframework.data.domain.Example;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public interface UserRepository {
-    Optional<User> findById(Long id); // interface выводит Optional, сервис уже выдает объект, а дальше уже смотрят exception или нет
+    Optional<User> findById(Long id); // Если пользователь существует, он будет обернут в Optional, в противном случае Optional будет пустым.
 
+    // Если пользователь существует, он будет обернут в Optional, в противном случае Optional будет пустым.
     Optional<User> findByUserName(String userName);
 
     void update(User user); // она будет добавлять юзера, или update если он уже есть.

@@ -1,5 +1,8 @@
 package com.example.tasklist.service;
 
+import com.example.tasklist.web.dto.auth.JwtRequest;
+import com.example.tasklist.web.dto.auth.JwtResponse;
+
 /**
  * Service for auth
  */

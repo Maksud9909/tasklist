@@ -1,11 +1,11 @@
-package com.example.tasklist.domain.task;
+package com.example.tasklist.web.dto.task;
 
+import com.example.tasklist.domain.task.Status;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-
 @Data
-public class Task {
+public class TaskDto {
     private Long id;
 
     private String title;
