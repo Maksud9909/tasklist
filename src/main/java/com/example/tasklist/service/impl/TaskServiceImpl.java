@@ -18,12 +18,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task update(Task user) {
+    public Task update(Task task) {
         return null;
     }
 
     @Override
-    public Task create(Task user) {
+    public Task create(Task task) {
         return null;
     }
 

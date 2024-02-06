@@ -1,8 +1,16 @@
 package com.example.tasklist.domain.exception;
 
+
 /**
- * When we will have problems with taking objects from dataBase, then it will work
+ * Это может быть связано с проблемой сопоставления (mapping) ресурса, например, когда код пытается преобразовать или
+ * отобразить один тип ресурса в другой, и этот процесс не может быть выполнен по каким-то причинам.
  */
+
+/**
+ * В контексте веб-приложений это может включать в себя сценарии, где фреймворк (например, Spring) сталкивается с трудностью при попытке отобразить (map) HTTP-запрос на соответствующий метод контроллера,
+ *  * или при преобразовании данных запроса в объекты.
+ */
+
 public class ResourceMappingException extends RuntimeException{
     public ResourceMappingException(String message) {
         super(message);
