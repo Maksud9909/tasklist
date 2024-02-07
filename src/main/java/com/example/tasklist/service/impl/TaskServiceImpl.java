@@ -13,7 +13,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllByUserId(String taskName) {
+    public List<Task> getAllByUserId(Long id) {
         return null;
     }
 
@@ -23,7 +23,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task create(Task task) {
+    public Task create(Task task,Long id) {
         return null;
     }
 
