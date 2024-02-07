@@ -25,6 +25,7 @@ public class TaskController {
     /**
      *
      * @param taskDto тут он валидирует(проверяет) на то, что у TaskDto нету ошибок, о чем нам говорит @Validated
+     *                Он должен валидироваться, только при обноволении
      * @return
      */
     @PutMapping

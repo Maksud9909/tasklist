@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor // из-за него не надо писать autowired
-@Validated
+@Validated // разрешает валидацию
 public class UserController {
     private final UserService userService;
     private final TaskService taskService;
@@ -62,6 +62,13 @@ public class UserController {
         List<Task> taskList = taskService.getAllByUserId(id); // получаем все задания через getAllByUserId
         return taskMapper.toDto(taskList);
     }
+
+    /**
+     *
+     * @param id берет айди через сылку
+     * @param dto он должен валидироваться когда будем писать body в JSON
+     * @return
+     */
 
     @PostMapping("/{id}/tasks")
     public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto dto) {
