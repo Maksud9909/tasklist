@@ -1,0 +1,26 @@
+
+# мы здесь показали, как нужно подключаться к бд
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres?currentSchema=tasklist
+    username: postgres
+    password: bestuser
+    driver-class-name: org.postgresql.Driver
+#url:
+
+
+#     это настройка sql, она будет выполняться всегда
+  sql:
+    init:
+      mode: always
+      continue-on-error: false # если будет ошибка, то будет останавливаться
+      data-locations: classpath:demo_data.sql
+
+
+
+#spring:
+#datasource:
+#  url: jdbc:mysql://localhost:3306/my_db?useSSL=false
+#  username: bestuser
+#  password: bestuser
+#  driver-class-name: com.mysql.cj.jdbc.Driver

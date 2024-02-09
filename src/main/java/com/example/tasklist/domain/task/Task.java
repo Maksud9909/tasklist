@@ -12,7 +12,7 @@ public class Task {
 
     private String description;
 
-    private Status status; // status is done or not
+    private Status status; // status is done, not or in the process
 
     private LocalDateTime expirationDate; // when you have to end this task
 }
