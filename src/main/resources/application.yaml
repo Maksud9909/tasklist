@@ -2,7 +2,7 @@
 # мы здесь показали, как нужно подключаться к бд
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/postgres?currentSchema=tasklist
+    url: jdbc:postgresql://localhost:5433/postgres?currentSchema=public
     username: postgres
     password: bestuser
     driver-class-name: org.postgresql.Driver
@@ -15,6 +15,20 @@ spring:
       mode: always
       continue-on-error: false # если будет ошибка, то будет останавливаться
       data-locations: classpath:demo_data.sql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
