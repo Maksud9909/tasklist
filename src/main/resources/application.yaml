@@ -16,6 +16,21 @@ spring:
       continue-on-error: false # если будет ошибка, то будет останавливаться
       data-locations: classpath:demo_data.sql
 
+security:
+  jwt:
+    # тут мы получили секрет на base 64 encoder
+    secret: bGtqZGZsO2thc2RqZmxramFza2ZqYWxza29pd29qbGtqIGFramYgbGFramZrc2EgajtramYgbGFsYWpka2xmIA==
+    access: 360000
+    refresh: 2592000000
+
+
+
+
+
+
+
+
+
 
 
 
