@@ -1,5 +1,7 @@
 package com.example.tasklist.config;
 
+import com.example.tasklist.web.security.JwtTokenFilter;
+import com.example.tasklist.web.security.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +29,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor // сразу пишет конструктор для всех переменных
 public class ApplicationConfig {
+
+    private final JwtTokenProvider tokenProvider;
 
     private final ApplicationContext applicationContext;
 
@@ -91,7 +95,7 @@ public class ApplicationConfig {
                 .and()
                 .anonymous() // Отключает анонимную аутентификацию.
                 .disable()
-                .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtTokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build(); // фильтр будет обрабатывать токены JWT, выполнять аутентификацию и устанавливать контекст
     }
 }
