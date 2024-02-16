@@ -6,7 +6,7 @@ insert into users (name, username, password)
 values ('John Doe', 'johndoe@gmail.com', '123'), -- 12345
        ('Mike Smith', 'mikesmith@yahoo.com', '345');
 
--- $2$10$XLOyhvzLIaJCDdKBSOLZd.kSK7c2Zytg/ZKFdtIYYQUv8rUfvCR4W
+
 
 
 

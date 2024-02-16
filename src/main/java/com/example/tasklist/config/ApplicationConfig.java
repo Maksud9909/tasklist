@@ -36,7 +36,7 @@ public class ApplicationConfig {
 
     /**
      * Шифрование паролей
-     * @return
+     * @return Возвращает объект для шифрования паролей
      */
     @Bean
     public PasswordEncoder passwordEncoder(){

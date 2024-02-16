@@ -1,5 +1,6 @@
 package com.example.tasklist.web.security;
 
+import com.example.tasklist.domain.exception.ResourceNotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -31,7 +32,7 @@ public class JwtTokenFilter extends GenericFilterBean {
                 if (authentication != null ){
                     SecurityContextHolder.getContext().setAuthentication(authentication); // мы авторизовали пользователя
                 }
-            }
+            }catch (ResourceNotFoundException ignored){} // если произошел такой exception мы не будем ничего не делать
         }
     }
 }

@@ -14,7 +14,7 @@ spring:
     init:
       mode: always
       continue-on-error: false # если будет ошибка, то будет останавливаться
-      data-locations: classpath:demo_data.sql
+#      data-locations: classpath:demo_data.sql
 
 security:
   jwt:

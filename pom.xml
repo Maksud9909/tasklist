@@ -52,12 +52,13 @@
 		</dependency>
 
 
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-			<version>${postgresql.version}</version>
+			<version>42.7.1</version>
 		</dependency>
+
 
 
 		<dependency>
