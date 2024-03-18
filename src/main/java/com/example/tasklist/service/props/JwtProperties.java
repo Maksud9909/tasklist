@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "security.jwt") // по этому префиксу мы будем получать данные через app.yaml
 public class JwtProperties {
     private String secret;
-    private long access;
-    private long refresh;
+    private long access; // время access токена
+    private long refresh; // время refresh токена
 }

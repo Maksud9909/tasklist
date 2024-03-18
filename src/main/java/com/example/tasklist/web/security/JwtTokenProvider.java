@@ -11,7 +11,6 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,7 +29,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
-
     private final UserDetailsService  userDetailsService;
     private final UserService userService;
     private Key key;
@@ -63,9 +61,9 @@ public class JwtTokenProvider {
     }
 
 
-    public String createRefreshToken(Long user,String userName){
-        Claims claims = Jwts.claims().setSubject(userName);
-        claims.put("id",userName);
+    public String createRefreshToken(Long userId,String userName){
+        Claims claims = Jwts.claims().setSubject(userName); // claims - это информация, которая хранится в payload
+        claims.put("id",userId);
         Date now = new Date();
         Date validity = new Date(now.getTime() + jwtProperties.getRefresh()); // validity хранит данные сейчас + 30 дней
         return Jwts.builder()
@@ -121,18 +119,11 @@ public class JwtTokenProvider {
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .getSubject();
+                .getSubject(); // отсюда получаем юзернейм
     }
     public Authentication getAuthentication(String token){
         String userName = getUsername(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
         return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
     }
-
-
-
-
-
-
-
 }

@@ -1,4 +1,4 @@
-package com.example.tasklist.config;
+package com.example.tasklist.configuration;
 
 import com.example.tasklist.web.security.JwtTokenFilter;
 import com.example.tasklist.web.security.JwtTokenProvider;
