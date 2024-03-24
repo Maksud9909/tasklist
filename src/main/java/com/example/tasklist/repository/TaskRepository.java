@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository {
-    Optional<Task> findById(Long id); // Если задача существует, она будет обернута в Optional, в противном случае Optional будет пустым.
+    Optional<Task> findTaskById(Long id); // Если задача существует, она будет обернута в Optional, в противном случае Optional будет пустым.
 
-    List<Task> findAllByUserId(Long userId);// Этот метод предполагает, что каждая задача привязана к конкретному пользователю.
+    List<Task> findAllTasksByUserId(Long userId);// Этот метод предполагает, что каждая задача привязана к конкретному пользователю.
 
-    void assignToUserById(Long taskId,Long userId); // он будет соединять юзера и таску
+    void assignTasksToUserById(Long taskId, Long userId); // он будет соединять юзера и таску
 
-    void update(Task task); // метод, который обновляет информацию об задаче
+    void updateTask(Task task); // метод, который обновляет информацию об задаче
 
-    void create(Task task); // он добавляет задачу в базу данных
+    void createTask(Task task); // он добавляет задачу в базу данных
 
-    void delete(Long id); // удаляет задачу через ее айди
+    void deleteTask(Long id); // удаляет задачу через ее айди
 }
