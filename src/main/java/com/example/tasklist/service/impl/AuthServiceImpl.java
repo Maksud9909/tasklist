@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-    private final AuthenticationManager authenticationManager; // авторизация во время логина
+    private final AuthenticationManager authenticationManager; // авторизация во время логина(логин и пароль)
     private final UserService userService; // чтобы брать самих юзеров
     private final JwtTokenProvider jwtTokenProvider; // для создания токенов
     @Override
@@ -33,6 +33,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JwtResponse refresh(String refreshToken) {
-        return null;
+        return jwtTokenProvider.refreshUserTokens(refreshToken);
     }
 }

@@ -101,7 +101,7 @@ public class JwtTokenProvider {
 
     }
 
-    public String getId(String token){ // мы будем здесь айди
+    public String getId(String token){ // мы через токен получаем айди пользователя
         return Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -112,7 +112,7 @@ public class JwtTokenProvider {
                 .toString();
     }
 
-    private String getUsername(String token){
+    private String getUsernameFromToken(String token){
         return Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -122,7 +122,7 @@ public class JwtTokenProvider {
                 .getSubject(); // отсюда получаем юзернейм
     }
     public Authentication getAuthentication(String token){
-        String userName = getUsername(token);
+        String userName = getUsernameFromToken(token); // получили юзернейм(спарсили)
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
         return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
     }
