@@ -19,6 +19,7 @@ public class DataSourceConfig {
 
 
     // это будет помогать Spring на уровне сервисов, из-за того, что есть там аннотации Transactional
+    // он будет знать пароль и саму базу данных в файле resources
     public Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }

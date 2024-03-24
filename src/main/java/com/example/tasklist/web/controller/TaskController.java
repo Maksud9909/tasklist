@@ -8,7 +8,7 @@ import com.example.tasklist.web.dto.validation.OnUpdate;
 import com.example.tasklist.web.mappers.TaskMapper;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

@@ -17,11 +17,13 @@ import java.util.List;
  */
 public class TaskRowMapper {
 
+
+    // превращаем SQL объекты в Java
     @SneakyThrows // если будет ошибка он будет ее выбрасывать выше
     public static Task mapRow(ResultSet resultSet) {
         if (resultSet.next()){
-            Task task = new Task();
-            task.setId(resultSet.getLong("task_id"));
+            Task task = new Task(); // создаем новое задание
+            task.setId(resultSet.getLong("task_id")); // когда мы получили результаты из базы данных, мы сетим этот результат к нашей Task
             task.setTitle(resultSet.getString("tasks_title"));
             task.setDescription(resultSet.getString("tasks_description"));
             task.setStatus(Status.valueOf(resultSet.getString("tasks_status"))); // из-за того, что у нас типа данных Enum

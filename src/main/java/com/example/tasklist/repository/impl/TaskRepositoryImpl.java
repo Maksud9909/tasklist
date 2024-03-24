@@ -66,7 +66,7 @@ join public.users_tasks ut on t.id = ut.task_id
     public Optional<Task> findTaskById(Long id) {
         try {
             Connection connection = dataSourceConfig.getConnection(); // получаем подключение к базе
-            PreparedStatement statement = connection.prepareStatement(FIND_BY_ID);
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_ID); // здесь пишется запрос
             statement.setLong(1,id); // мы передали айди в ?
             try(ResultSet resultSet = statement.executeQuery()){
                 return Optional.ofNullable(TaskRowMapper.mapRow(resultSet)); // получаем Java объект

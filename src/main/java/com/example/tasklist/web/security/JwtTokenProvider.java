@@ -54,6 +54,7 @@ public class JwtTokenProvider {
 
     }
 
+    // мы спарсили роль, чтобы придумать вместе с ней jwt token
     private List<String> resolveRoles(Set<Role> roles) {
         return roles.stream()
                 .map(Enum::name)
