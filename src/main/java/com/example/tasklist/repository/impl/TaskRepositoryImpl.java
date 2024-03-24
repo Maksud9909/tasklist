@@ -59,11 +59,11 @@ join public.users_tasks ut on t.id = ut.task_id
 
 
     private final String CREATE = """
-            insert into tasks (id, title, description, status, expirationdate)
+            insert into tasks (title, description, status, expirationdate)
             values (?,?,?,?)""";
 
     @Override
-    public Optional<Task> findById(Long id) {
+    public Optional<Task> findTaskById(Long id) {
         try {
             Connection connection = dataSourceConfig.getConnection(); // получаем подключение к базе
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID);
@@ -72,12 +72,12 @@ join public.users_tasks ut on t.id = ut.task_id
                 return Optional.ofNullable(TaskRowMapper.mapRow(resultSet)); // получаем Java объект
             }
         } catch (SQLException e) {
-            throw new ResourceMappingException("Error while finding user by id.");
+            throw new ResourceMappingException("Error while finding task by id.");
         }
     }
 
     @Override
-    public List<Task> findAllByUserId(Long userId) {
+    public List<Task> findAllTasksByUserId(Long userId) {
         try {
             Connection connection = dataSourceConfig.getConnection(); // получаем подключение к базе
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_USER_ID);
@@ -86,7 +86,7 @@ join public.users_tasks ut on t.id = ut.task_id
                 return TaskRowMapper.mapRows(resultSet);
             }
         } catch (SQLException e) {
-            throw new ResourceMappingException("Error while finding all by user id");
+            throw new ResourceMappingException("Error while finding all Tasks by user id");
 
         }
     }
@@ -98,7 +98,7 @@ join public.users_tasks ut on t.id = ut.task_id
      * @param userId The unique identifier of the User.
      */
     @Override
-    public void assignToUserById(Long taskId, Long userId) {
+    public void assignTasksToUserById(Long taskId, Long userId) {
         try {
             Connection connection = dataSourceConfig.getConnection(); // получаем подключение к базе
             PreparedStatement statement = connection.prepareStatement(ASSIGN);
@@ -106,13 +106,13 @@ join public.users_tasks ut on t.id = ut.task_id
             statement.setLong(2,userId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new ResourceMappingException("Error while assign to user");
+            throw new ResourceMappingException("Error while assign to task");
 
         }
     }
 
     @Override
-    public void update(Task task) {
+    public void updateTask(Task task) {
         try {
             Connection connection = dataSourceConfig.getConnection(); // получаем подключение к базе
             PreparedStatement statement = connection.prepareStatement(UPDATE);
@@ -127,22 +127,67 @@ join public.users_tasks ut on t.id = ut.task_id
             }else {
                 statement.setTimestamp(3, Timestamp.valueOf(task.getExpirationDate()));
             }
+            statement.setString(4,(task.getStatus().name()));
+            statement.setLong(5,task.getId());
+
 
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new ResourceMappingException("Error while updating to user");
+            throw new ResourceMappingException("Error while updating to task");
 
         }
     }
 
     @Override
-    public void create(Task task) {
+    public void createTask(Task task) {
+        try {
+            Connection connection = dataSourceConfig.getConnection(); // получаем подключение к базе
 
+            // из-за того, что это создание то она должно генерировать id
+            PreparedStatement statement = connection.prepareStatement(CREATE,PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setString(1,task.getTitle());
+            if (task.getDescription() == null){
+                statement.setNull(2, Types.VARCHAR); // если null, то просто пустой стринг
+            }else {
+                statement.setString(2, task.getDescription());
+            }
+            if (task.getExpirationDate() == null){
+                statement.setNull(3, Types.TIMESTAMP); // если null, то просто пустой стринг
+            }else {
+                statement.setTimestamp(3, Timestamp.valueOf(task.getExpirationDate()));
+            }
+            statement.setString(4,(task.getStatus().name()));
+
+            try (ResultSet resultSet = statement.getGeneratedKeys()){ // получаем отсюда айдишник
+                resultSet.next(); // он идет в самое начало где стоит айди
+                task.setId(resultSet.getLong(1));
+            }
+
+
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ResourceMappingException("Error while creating task");
+
+        }
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteTask(Long id) {
+        try {
+            Connection connection = dataSourceConfig.getConnection(); // получаем подключение к базе
 
+            // из-за того, что это создание то она должно генерировать id
+            PreparedStatement statement = connection.prepareStatement(DELETE);
+            statement.setLong(1,id);
+
+
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ResourceMappingException("Error while deleting task");
+
+        }
     }
 }

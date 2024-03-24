@@ -19,13 +19,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(readOnly = true) // когда идут get запросы мы пишем read only true
     public Task getById(Long id) {
-        return taskRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Task not found"));
+        return taskRepository.findTaskById(id).orElseThrow(()->new ResourceNotFoundException("Task not found"));
     }
 
     @Override
     @Transactional(readOnly = true) // когда идут get запросы мы пишем read only true
     public List<Task> getAllByUserId(Long id) {
-        return taskRepository.findAllByUserId(id);
+        return taskRepository.findAllTasksByUserId(id);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
         if (task.getStatus() == null){
             task.setStatus(Status.TODO);
         }
-        taskRepository.update(task);
+        taskRepository.updateTask(task);
         return task;
     }
 
@@ -42,8 +42,8 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public Task create(Task task,Long id) {
         task.setStatus(Status.TODO); // когда только создается задача, то сразу стоит to do
-        taskRepository.create(task);
-        taskRepository.assignToUserById(task.getId(),id); // соеденяем таск с юзером
+        taskRepository.createTask(task);
+        taskRepository.assignTasksToUserById(task.getId(),id); // соеденяем таск с юзером
         return task;
     }
 
@@ -56,6 +56,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public void delete(Long id) {
-        taskRepository.delete(id);
+        taskRepository.deleteTask(id);
     }
 }
