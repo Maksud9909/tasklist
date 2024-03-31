@@ -27,12 +27,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration // место где собираются все бины
 @EnableWebSecurity
-@RequiredArgsConstructor // сразу пишет конструктор для всех переменных
+@RequiredArgsConstructor // сразу пишет конструктор для всех final переменных
 public class ApplicationConfig {
 
     private final JwtTokenProvider tokenProvider;
 
-    private final ApplicationContext applicationContext;
+//    private final ApplicationContext applicationContext;
 
     /**
      * Шифрование паролей

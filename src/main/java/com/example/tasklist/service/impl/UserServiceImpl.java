@@ -21,27 +21,27 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User getById(Long id) {
-        return userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User nor found"));
+        return userRepository.findUserById(id).orElseThrow(()-> new ResourceNotFoundException("User nor found"));
     }
 
     @Override
     @Transactional(readOnly = true)
     public User getByUserName(String userName) {
-        return userRepository.findByUserName(userName).orElseThrow(()-> new ResourceNotFoundException("Username not found"));
+        return userRepository.findUserByUserName(userName).orElseThrow(()-> new ResourceNotFoundException("Username not found"));
     }
 
     @Override
     @Transactional
     public User update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword())); // хешированный пароль
-        userRepository.update(user);
+        userRepository.updateUser(user);
         return user;
     }
 
     @Override
     @Transactional
     public User create(User user) {
-        if (userRepository.findByUserName(user.getUserName()).isPresent()){ // есть ли такой пользователь в базе
+        if (userRepository.findUserByUserName(user.getUserName()).isPresent()){ // есть ли такой пользователь в базе
             throw new IllegalStateException("User is already existing");
         }
         if (!user.getPassword().equals(user.getConfirmationOfPassword())){ // если ввести неправильный пароль
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
         // в остальных случаях будет это
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.create(user);
+        userRepository.createUser(user);
 
 
         Set<Role> roles = Set.of(Role.ROLE_USER);
@@ -63,12 +63,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public boolean isTaskOwner(Long userId, Long taskId) {
-        return userRepository.isTaskOwner(userId,taskId);
+        return userRepository.isUserTaskOwner(userId,taskId);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        userRepository.delete(id);
+        userRepository.deleteUser(id);
     }
 }
