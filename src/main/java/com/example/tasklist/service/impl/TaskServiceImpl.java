@@ -40,10 +40,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task create(Task task,Long id) {
+    public Task create(Task task,Long userId) {
         task.setStatus(Status.TODO); // когда только создается задача, то сразу стоит to do
         taskRepository.createTask(task);
-        taskRepository.assignTasksToUserById(task.getId(),id); // соеденяем таск с юзером
+        taskRepository.assignTasksToUserById(task.getId(),userId); // соеденяем таск с юзером
         return task;
     }
 

@@ -2,7 +2,7 @@ package com.example.tasklist.repository.impl;
 
 import com.example.tasklist.domain.exception.ResourceMappingException;
 import com.example.tasklist.domain.task.Task;
-import com.example.tasklist.repository.DataSourceConfig;
+import com.example.tasklist.repository.dataSourceConfig.DataSourceConfig;
 import com.example.tasklist.repository.TaskRepository;
 import com.example.tasklist.repository.mappers.TaskRowMapper;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class TaskRepositoryImpl implements TaskRepository {
        t.expirationdate as tasks_expiration_date,
        t.status as tasks_status
        from tasks t
-join public.users_tasks ut on t.id = ut.task_id
+join users_tasks ut on t.id = ut.task_id
        where ut.user_id = ?
             """;
 

@@ -11,28 +11,71 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-    private final AuthenticationManager authenticationManager; // авторизация во время логина(логин и пароль)
-    private final UserService userService; // чтобы брать самих юзеров
-    private final JwtTokenProvider jwtTokenProvider; // для создания токенов
+
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Override
-    public JwtResponse login(JwtRequest loginRequest) {
+    public JwtResponse login(final JwtRequest loginRequest) {
         JwtResponse jwtResponse = new JwtResponse();
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword())); // авторизация
-
-        User user = userService.getByUserName(loginRequest.getUserName());
-        jwtResponse.setId(user.getId());
-        jwtResponse.setUserName(user.getUserName());
-        jwtResponse.setAccessToken(jwtTokenProvider.createAccessToken(user.getId(), user.getUserName(), user.getRoles()));
-        jwtResponse.setRefreshToken(jwtTokenProvider.createRefreshToken(user.getId(), user.getUserName()));
-
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUserName(),
+                            loginRequest.getPassword()
+                    )
+            );
+            User user = userService.getByUsername(loginRequest.getUserName());
+            jwtResponse.setId(user.getId());
+            jwtResponse.setUsername(user.getUsername());
+            jwtResponse.setAccessToken(jwtTokenProvider.createAccessToken(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getRoles()
+            ));
+            jwtResponse.setRefreshToken(jwtTokenProvider.createRefreshToken(
+                    user.getId(),
+                    user.getUsername()
+            ));
+        } catch (Exception e) {
+            // Обработка ошибки аутентификации
+            // Например, возврат сообщения об ошибке или логирование
+            e.printStackTrace();
+            // В данном случае можно вернуть null или пустой объект JwtResponse,
+            // так как аутентификация не удалась
+            return null;
+        }
         return jwtResponse;
     }
 
     @Override
-    public JwtResponse refresh(String refreshToken) {
+    public JwtResponse refresh(final String refreshToken) {
         return jwtTokenProvider.refreshUserTokens(refreshToken);
     }
+
+
+
+//    @Override
+//    public JwtResponse login(
+//            final JwtRequest loginRequest
+//    ) {
+//        JwtResponse jwtResponse = new JwtResponse();
+//        authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword()));
+//        User user = userService.getByUsername(loginRequest.getUserName());
+//        jwtResponse.setId(user.getId());
+//        jwtResponse.setUsername(user.getUsername());
+//        jwtResponse.setAccessToken(jwtTokenProvider.createAccessToken(user.getId(),
+//                user.getUsername(), user.getRoles()));
+//        jwtResponse.setRefreshToken(jwtTokenProvider.createRefreshToken(
+//                user.getId(), user.getUsername())
+//        );
+//        return jwtResponse;
+//    }
+
 }

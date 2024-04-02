@@ -13,7 +13,7 @@ public class JwtResponse {
     /**
      * User's username.
      */
-    private String userName;
+    private String username;
     /**
      * Access token for authenticated requests.
      */

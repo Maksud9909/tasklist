@@ -23,7 +23,12 @@ public class JwtEntityFactory {
      * @return JwtEntity, представляющий пользователя для аутентификации через JWT.
      */
     public static JwtEntity create(User user){
-        return new JwtEntity(user.getId(), user.getUserName(), user.getName(), user.getPassword(),mapToGrantedAuthorities(new ArrayList<>(user.getRoles())));
+        return new JwtEntity(
+                user.getId()
+                , user.getUsername()
+                , user.getName()
+                , user.getPassword()
+                ,mapToGrantedAuthorities(new ArrayList<>(user.getRoles())));
     }
 
 

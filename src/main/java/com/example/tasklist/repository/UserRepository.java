@@ -15,7 +15,7 @@ public interface UserRepository {
 
     void createUser(User user); // он создает нового юзера
 
-    void insertUserRole(long userId, Role role); // роль которую будем давать юзеру
+    void insertUserRole(Long userId, Role role); // роль которую будем давать юзеру
 
     // он будет проверять, является ли юзер владельцом этого задания. Также, это создано, чтобы другие юзеры не имели доступ к заданию.
     boolean isUserTaskOwner(Long userId, Long taskId);

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -27,12 +28,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration // место где собираются все бины
 @EnableWebSecurity
-@RequiredArgsConstructor // сразу пишет конструктор для всех final переменных
+@RequiredArgsConstructor(onConstructor = @__(@Lazy)) // сразу пишет конструктор для всех final переменных
 public class ApplicationConfig {
 
     private final JwtTokenProvider tokenProvider;
 
-//    private final ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     /**
      * Шифрование паролей

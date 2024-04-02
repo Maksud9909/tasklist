@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getByUserName(String userName) {
-        return userRepository.findUserByUserName(userName).orElseThrow(()-> new ResourceNotFoundException("Username not found"));
+    public User getByUsername(String username) {
+        return userRepository.findUserByUserName(username).orElseThrow(()-> new ResourceNotFoundException("Username not found"));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User create(User user) {
-        if (userRepository.findUserByUserName(user.getUserName()).isPresent()){ // есть ли такой пользователь в базе
+        if (userRepository.findUserByUserName(user.getUsername()).isPresent()){ // есть ли такой пользователь в базе
             throw new IllegalStateException("User is already existing");
         }
         if (!user.getPassword().equals(user.getConfirmationOfPassword())){ // если ввести неправильный пароль

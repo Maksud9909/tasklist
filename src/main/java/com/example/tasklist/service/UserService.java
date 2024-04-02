@@ -5,7 +5,7 @@ import com.example.tasklist.domain.user.User;
 public interface UserService {
     User getById(Long id);
 
-    User getByUserName(String userName);
+    User getByUsername(String username);
 
     User update(User user);
 

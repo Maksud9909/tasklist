@@ -18,8 +18,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -84,9 +85,9 @@ public class JwtTokenProvider {
         Long userId = Long.valueOf(getId(refreshToken));
         User user = userService.getById(userId);
         jwtResponse.setId(userId);
-        jwtResponse.setUserName(user.getUserName());
-        jwtResponse.setAccessToken(createAccessToken(userId, user.getUserName(),user.getRoles()));
-        jwtResponse.setRefreshToken(createRefreshToken(userId,user.getUserName()));
+        jwtResponse.setUsername(user.getUsername());
+        jwtResponse.setAccessToken(createAccessToken(userId, user.getUsername(),user.getRoles()));
+        jwtResponse.setRefreshToken(createRefreshToken(userId,user.getUsername()));
 
         return jwtResponse;
     }
@@ -127,4 +128,5 @@ public class JwtTokenProvider {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
         return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
     }
+
 }
