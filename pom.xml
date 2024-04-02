@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.2.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -15,15 +15,22 @@
 	<description>To do list with email</description>
 
 	<properties>
-		<!--		<mysqlconnectorj.version>8.3.0</mysqlconnectorj.version>-->
 		<java.version>17</java.version>
-		<lombok.version>1.18.24</lombok.version>
-		<postgresql.version>42.7.1</postgresql.version>
+		<lombok.version>1.18.30</lombok.version>
+		<postgresql.version>42.7.3</postgresql.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
-		<hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
-		<jakarta-validation.version>3.0.2</jakarta-validation.version>
-		<jjwt.version>0.11.5</jjwt.version>
-
+		<jjwt.version>0.12.5</jjwt.version>
+		<liquibase.version>4.26.0</liquibase.version>
+		<springdoc.version>2.4.0</springdoc.version>
+		<preliquibase.version>1.5.0</preliquibase.version>
+		<minio.version>8.5.9</minio.version>
+		<xml-format.version>3.3.1</xml-format.version>
+		<checkstyle.version>3.3.1</checkstyle.version>
+		<graphql-java-kickstart.version>15.2.0</graphql-java-kickstart.version>
+		<graphql-java-extended-scalars.version>21.0</graphql-java-extended-scalars.version>
+		<junit-jupiter.version>5.10.2</junit-jupiter.version>
+		<mockito.version>5.11.0</mockito.version>
+		<jacoco.version>0.8.11</jacoco.version>
 	</properties>
 
 	<dependencies>

@@ -24,13 +24,13 @@ public class TaskRowMapper {
         if (resultSet.next()){
             Task task = new Task(); // создаем новое задание
             task.setId(resultSet.getLong("task_id")); // когда мы получили результаты из базы данных, мы сетим этот результат к нашей Task
-            task.setTitle(resultSet.getString("tasks_title"));
-            task.setDescription(resultSet.getString("tasks_description"));
-            task.setStatus(Status.valueOf(resultSet.getString("tasks_status"))); // из-за того, что у нас типа данных Enum
+            task.setTitle(resultSet.getString("task_title"));
+            task.setDescription(resultSet.getString("task_description"));
+            task.setStatus(Status.valueOf(resultSet.getString("task_status"))); // из-за того, что у нас типа данных Enum
 
 
 
-            Timestamp timestamp = resultSet.getTimestamp("tasks_expiration_date");
+            Timestamp timestamp = resultSet.getTimestamp("task_expiration_date");
             if (timestamp != null){
                 task.setExpirationDate(timestamp.toLocalDateTime());
             }
@@ -49,12 +49,12 @@ public class TaskRowMapper {
             Task task = new Task();
             task.setId(resultSet.getLong("task_id"));
             if (!resultSet.wasNull()) {
-                task.setTitle(resultSet.getString("tasks_title"));
-                task.setDescription(resultSet.getString("tasks_description"));
-                task.setStatus(Status.valueOf(resultSet.getString("tasks_status"))); // из-за того, что у нас типа данных Enum
+                task.setTitle(resultSet.getString("task_title"));
+                task.setDescription(resultSet.getString("task_description"));
+                task.setStatus(Status.valueOf(resultSet.getString("task_status"))); // из-за того, что у нас типа данных Enum
 
 
-                Timestamp timestamp = resultSet.getTimestamp("tasks_expiration_date");
+                Timestamp timestamp = resultSet.getTimestamp("task_expiration_date");
                 if (timestamp != null) {
                     task.setExpirationDate(timestamp.toLocalDateTime());
                 }

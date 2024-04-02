@@ -22,18 +22,24 @@ public class JwtEntityFactory {
      * @param user Сущность пользователя, из которой создается JwtEntity.
      * @return JwtEntity, представляющий пользователя для аутентификации через JWT.
      */
-    public static JwtEntity create(User user){
+    public static JwtEntity create(
+            final User user
+    ) {
         return new JwtEntity(
-                user.getId()
-                , user.getUsername()
-                , user.getName()
-                , user.getPassword()
-                ,mapToGrantedAuthorities(new ArrayList<>(user.getRoles())));
+                user.getId(),
+                user.getUsername(),
+                user.getName(),
+                user.getPassword(),
+                mapToGrantedAuthorities(new ArrayList<>(user.getRoles()))
+        );
     }
 
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> roles){
-        return roles.stream().map(Enum::name)
+    private static List<GrantedAuthority> mapToGrantedAuthorities(
+            final List<Role> roles
+    ) {
+        return roles.stream()
+                .map(Enum::name)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }

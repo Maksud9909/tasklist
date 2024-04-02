@@ -22,7 +22,7 @@ public class UserDto {
     // аннотация, говорит, что объект не должен быть null, а groups говорит, когда он не должен быть null
     @NotNull(message = "Name must be not null.", groups = {OnUpdate.class, OnCreate.class}) // теперь этот объект не будет null
     @Length(max = 255,message = "Name must be less than 255 symbols",groups = {OnCreate.class, OnUpdate.class})
-    private String userName;
+    private String username;
 
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // мы только можем писать пароль, а смотреть его не можем, когда будем получать json

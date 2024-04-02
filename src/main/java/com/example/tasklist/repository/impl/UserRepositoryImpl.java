@@ -112,12 +112,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findUserByUserName(String userName) {
+    public Optional<User> findUserByUserName(String username) {
         try {
             Connection connection = dataSourceConfig.getConnection();
             // мы написали это так как в резалт сете нужно возвращаться потом вперед.
             PreparedStatement statement = connection.prepareStatement(FIND_BY_USERNAME, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            statement.setString(1,userName);
+            statement.setString(1, username);
             System.out.println("We are in");
             try (ResultSet resultSet = statement.executeQuery()){
                 return Optional.ofNullable(UserRowMapper.mapRow(resultSet));

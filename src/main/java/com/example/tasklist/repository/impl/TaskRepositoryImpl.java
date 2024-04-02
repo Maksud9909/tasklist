@@ -24,18 +24,18 @@ public class TaskRepositoryImpl implements TaskRepository {
     // тут мы находим таск через айди
     private final String FIND_BY_ID = """
             select t.id as task_id,
-                   t.title as tasks_title,
-                   t.description as tasks_description,
-                   t.expirationdate as tasks_expiration_date,
-                   t.status as tasks_status
+                   t.title as task_title,
+                   t.description as task_description,
+                   t.expirationdate as task_expiration_date,
+                   t.status as task_status
                    from tasks t where id = ?""";
 
     private final String FIND_ALL_BY_USER_ID = """
        select t.id as task_id,
-       t.title as tasks_title,
-       t.description as tasks_description,
-       t.expirationdate as tasks_expiration_date,
-       t.status as tasks_status
+       t.title as task_title,
+       t.description as task_description,
+       t.expirationdate as task_expiration_date,
+       t.status as task_status
        from tasks t
 join users_tasks ut on t.id = ut.task_id
        where ut.user_id = ?
@@ -72,7 +72,7 @@ join users_tasks ut on t.id = ut.task_id
                 return Optional.ofNullable(TaskRowMapper.mapRow(resultSet)); // получаем Java объект
             }
         } catch (SQLException e) {
-            throw new ResourceMappingException("Error while finding task by id.");
+            throw new ResourceMappingException("Error while finding task by id."); // TODO MISTAKE HERE
         }
     }
 
