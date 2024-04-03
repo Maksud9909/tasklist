@@ -11,8 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
-
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -27,11 +25,11 @@ public class AuthServiceImpl implements AuthService {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUserName(),
+                            loginRequest.getUsername(),
                             loginRequest.getPassword()
                     )
             );
-            User user = userService.getByUsername(loginRequest.getUserName());
+            User user = userService.getByUsername(loginRequest.getUsername());
             jwtResponse.setId(user.getId());
             jwtResponse.setUsername(user.getUsername());
             jwtResponse.setAccessToken(jwtTokenProvider.createAccessToken(

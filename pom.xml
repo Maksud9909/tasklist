@@ -31,6 +31,7 @@
 		<junit-jupiter.version>5.10.2</junit-jupiter.version>
 		<mockito.version>5.11.0</mockito.version>
 		<jacoco.version>0.8.11</jacoco.version>
+		<mybatis.version>3.0.1</mybatis.version>
 	</properties>
 
 	<dependencies>
@@ -55,15 +56,18 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>3.0.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
 
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.7.1</version>
 		</dependency>
 
 

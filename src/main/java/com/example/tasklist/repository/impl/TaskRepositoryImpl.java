@@ -28,7 +28,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                    t.description as task_description,
                    t.expirationdate as task_expiration_date,
                    t.status as task_status
-                   from tasks t where id = ?""";
+                   from tasks t where t.id = ?""";
 
     private final String FIND_ALL_BY_USER_ID = """
        select t.id as task_id,
@@ -59,7 +59,7 @@ join users_tasks ut on t.id = ut.task_id
 
 
     private final String CREATE = """
-            insert into tasks (title, description, status, expirationdate)
+            insert into tasks (title, description,expirationdate,status)
             values (?,?,?,?)""";
 
     @Override

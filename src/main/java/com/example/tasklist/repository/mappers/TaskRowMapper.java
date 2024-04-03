@@ -4,9 +4,7 @@ import com.example.tasklist.domain.task.Status;
 import com.example.tasklist.domain.task.Task;
 import lombok.SneakyThrows;
 
-import javax.swing.event.ListDataEvent;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;

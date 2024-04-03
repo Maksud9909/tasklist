@@ -16,6 +16,12 @@ spring:
       continue-on-error: false # если будет ошибка, то будет останавливаться
 #      data-locations: classpath:demo_data.sql
 
+
+# мы тут описали, локацию описание этого файла
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+
 security:
   jwt:
     # тут мы получили секрет на base 64 encoder
@@ -26,6 +32,8 @@ security:
 server:
   port: 8081
   address: localhost
+
+
 
 
 

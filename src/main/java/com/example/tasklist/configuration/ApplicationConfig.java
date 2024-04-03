@@ -28,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration // место где собираются все бины
 @EnableWebSecurity
-@RequiredArgsConstructor(onConstructor = @__(@Lazy)) // сразу пишет конструктор для всех final переменных
+@RequiredArgsConstructor(onConstructor = @__(@Lazy)) // сразу пишет конструктор для всех final переменных, когда переменная понадобится он тогда ее внедрит
 public class ApplicationConfig {
 
     private final JwtTokenProvider tokenProvider;

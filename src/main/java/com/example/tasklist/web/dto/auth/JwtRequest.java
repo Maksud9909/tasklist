@@ -12,7 +12,7 @@ public class JwtRequest {
      * Username entered during authentication.
      */
     @NotNull(message = "Username must be not null.") // он требует валидации, так как мы туда отправляем данные
-    private String userName;
+    private String username;
     /**
      * Password entered during authentication.
      */
