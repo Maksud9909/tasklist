@@ -19,7 +19,7 @@ import java.util.Optional;
 /**
  * Implementation of the {@link UserRepository} interface for handling User entities.
  */
-@Repository
+//@Repository
 @RequiredArgsConstructor
 
 public class UserRepositoryImpl implements UserRepository {
