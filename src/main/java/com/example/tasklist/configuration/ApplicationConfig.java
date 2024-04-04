@@ -2,6 +2,11 @@ package com.example.tasklist.configuration;
 
 import com.example.tasklist.web.security.JwtTokenFilter;
 import com.example.tasklist.web.security.JwtTokenProvider;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -35,6 +40,8 @@ public class ApplicationConfig {
 
     private final ApplicationContext applicationContext;
 
+//    private DataSource dataSource;
+
     /**
      * Шифрование паролей
      * @return Возвращает объект для шифрования паролей
@@ -54,6 +61,32 @@ public class ApplicationConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
+    @Bean
+    public OpenAPI openAPI(){
+        // Создаем новый экземпляр OpenAPI
+        return new OpenAPI()
+                // Добавляем элемент безопасности для требования авторизации
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                // Устанавливаем компоненты OpenAPI, такие как схемы безопасности
+                .components(
+                        // Добавляем схему безопасности с именем "bearerAuth"
+                        new Components()
+                                .addSecuritySchemes("bearerAuth",
+                                        // Устанавливаем схему безопасности типа HTTP с использованием механизма bearer token
+                                        new SecurityScheme()
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")
+                                )
+                )
+                // Устанавливаем информацию о API, такую как название, описание и версию
+                .info(new Info()
+                        .title("Task list API")
+                        .description("Demo SpringBoot Application")
+                        .version("1.0"));
+    }
+
 
 
     /**
@@ -92,6 +125,8 @@ public class ApplicationConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/v3/api-docs/**").permitAll() // это для Swagger
                 .anyRequest().authenticated() // Задает правила авторизации для различных URL-путей
                 .and()
                 .anonymous() // Отключает анонимную аутентификацию.
@@ -99,4 +134,13 @@ public class ApplicationConfig {
                 .addFilterBefore(new JwtTokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build(); // фильтр будет обрабатывать токены JWT, выполнять аутентификацию и устанавливать контекст
     }
+
+//    @Bean
+//    public SpringLiquibase liquibase() {
+//        SpringLiquibase liquibase = new SpringLiquibase();
+//        liquibase.setDataSource(dataSource);
+//        liquibase.setChangeLog("classpath:liquibase/db.changelog.yaml"); // Путь к вашему файлу changelog
+////        liquibase.setContexts("development,test,production"); // Опционально: Контексты применения changelog
+//        return (SpringLiquibase) liquibase.getDataSource();
+//    }
 }

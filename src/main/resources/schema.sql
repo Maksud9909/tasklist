@@ -3,7 +3,7 @@
 -- здесь мы будем создавать схему
 -- каждый раз, будет создаваться это схема, если уже есть то не будет
 -- create schema if not exists tasklist;
---
+
 create table if not exists users
 (
   id bigserial primary key, --bigserial - это значит long

@@ -2,7 +2,7 @@
 -- пароли были сгенерированы, bcrypt-generator - он хещирует данные
 
 
-insert into users (name, username, password)
+insert into users where not exists (name, username, password)
 values ('John Doe', 'johndoe@gmail.com', '123'), -- 12345
        ('Mike Smith', 'mikesmith@yahoo.com', '345');
 

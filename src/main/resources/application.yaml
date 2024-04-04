@@ -12,9 +12,13 @@ spring:
 #     это настройка sql, она будет выполняться всегда
   sql:
     init:
-      mode: always
+      mode: never # never потому-что теперь у нас liquibase
       continue-on-error: false # если будет ошибка, то будет останавливаться
 #      data-locations: classpath:demo_data.sql
+  liquibase:
+    change-log: classpath:liquibase/db.changelog.yaml
+    enabled: true
+    default-schema: public
 
 
 # мы тут описали, локацию описание этого файла
@@ -25,12 +29,12 @@ mybatis:
 security:
   jwt:
     # тут мы получили секрет на base 64 encoder
-    secret: bGtqZGZsO2thc2RqZmxramFza2ZqYWxza29pd29qbGtqIGFramYgbGFramZrc2EgajtramYgbGFsYWpka2xmIA==
+    secret: bGtqZGZsO2thc2RqZmxramFza2ZqYWxza29
     access: 360000
     refresh: 2592000000
 
 server:
-  port: 8081
+  port: 8080
   address: localhost
 
 
