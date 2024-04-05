@@ -10,6 +10,8 @@ import com.example.tasklist.web.dto.validation.OnCreate;
 import com.example.tasklist.web.dto.validation.OnUpdate;
 import com.example.tasklist.web.mappers.TaskMapper;
 import com.example.tasklist.web.mappers.UserMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor // из-за него не надо писать autowired
 @Validated // разрешает валидацию
+@Tag(name = "User Controller", description = "User API")
 public class UserController {
     private final UserService userService;
     private final TaskService taskService;
@@ -34,6 +37,7 @@ public class UserController {
      * @return
      */
     @PutMapping
+    @Operation(summary = "Update User by UserDTO")
     public UserDto update(@Validated(OnUpdate.class)@RequestBody UserDto userDto){
         User user = userMapper.userToEntity(userDto); // мы получаем из тела запроса метода юзера
         User updatedUser = userService.update(user); // затем мы его апдейтим в базе данных
@@ -47,17 +51,20 @@ public class UserController {
      * @return возвращаем этого работника, поменяв его в dto
      */
     @GetMapping("/{id}")
+    @Operation(summary = "Get User by id")
     public UserDto getById(@PathVariable Long id){
         User user = userService.getById(id);
         return userMapper.toDto(user);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete User by id")
     public void deleteById(@PathVariable Long id){
         userService.delete(id);
     }
 
     @GetMapping("/{id}/tasks") // через юзера получаем все таски
+    @Operation(summary = "Get User's Tasks by id")
     public List<TaskDto> getTaskByUserId(@PathVariable Long id){
         List<Task> taskList = taskService.getAllByUserId(id); // получаем все задания через getAllByUserId
         return taskMapper.toDto(taskList);
@@ -71,6 +78,7 @@ public class UserController {
      */
 
     @PostMapping("/{id}/tasks")
+    @Operation(summary = "Create User")
     public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto dto) {
         Task task = taskMapper.taskToEntity(dto);
         Task createdTask = taskService.create(task,id);

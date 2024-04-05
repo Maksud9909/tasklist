@@ -37,8 +37,8 @@ server:
   port: 8080
   address: localhost
 
-
-
+springdoc:
+  override-with-generic-response: false # уйдут излишние запросы ошибок в Swagger
 
 
 
