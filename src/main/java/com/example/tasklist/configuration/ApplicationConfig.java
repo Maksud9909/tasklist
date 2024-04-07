@@ -2,6 +2,7 @@ package com.example.tasklist.configuration;
 
 import com.example.tasklist.web.security.JwtTokenFilter;
 import com.example.tasklist.web.security.JwtTokenProvider;
+import com.example.tasklist.web.security.exxpression.hardExpression.CustomSecurityExceptionHandler;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -14,8 +15,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,15 +39,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration // место где собираются все бины
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true) // он разрешает пользоваться безопасностью через методы
 @RequiredArgsConstructor(onConstructor = @__(@Lazy)) // сразу пишет конструктор для всех final переменных, когда переменная понадобится он тогда ее внедрит
 public class ApplicationConfig {
 
     private final JwtTokenProvider tokenProvider;
 
     private final ApplicationContext applicationContext;
-
-//    private DataSource dataSource;
-
     /**
      * Шифрование паролей
      * @return Возвращает объект для шифрования паролей
@@ -60,6 +64,17 @@ public class ApplicationConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+
+    /**
+     * Это бин для SecurityExpression
+     * @return
+     */
+    @Bean
+    public MethodSecurityExpressionHandler expressionHandler(){
+        DefaultMethodSecurityExpressionHandler expressionHandler =  new CustomSecurityExceptionHandler();
+        expressionHandler.setApplicationContext(applicationContext);
+        return expressionHandler;
     }
 
     @Bean

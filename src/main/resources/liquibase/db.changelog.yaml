@@ -1,4 +1,5 @@
 databaseChangeLog:
+  # Включаем все файлы с изменениями из указанной директории
   - includeAll:
       path: /changesets
       relativeToChangelogFile: true

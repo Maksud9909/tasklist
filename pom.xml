@@ -126,16 +126,14 @@
 			<version>${jjwt.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
 			<version>${jjwt.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
 
-		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -174,13 +172,3 @@
 	</build>
 
 </project>
-
-
-
-		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
-		<!--		<dependency>-->
-		<!--			<groupId>com.mysql</groupId>-->
-		<!--			<artifactId>mysql-connector-j</artifactId>-->
-		<!--			<scope>runtime</scope>-->
-		<!--			<version>${mysqlconnectorj.version}</version>-->
-		<!--		</dependency>-->
