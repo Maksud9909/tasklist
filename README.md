@@ -44,7 +44,7 @@ Getting Started
     Set up the required environment variables in your .env file.
     Build and run the application.
 
-Contributing
+#Contributing
 
 Feel free to contribute to this project by opening issues or submitting pull requests.
 
