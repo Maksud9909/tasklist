@@ -4,7 +4,7 @@ import com.example.tasklist.domain.user.Role;
 import com.example.tasklist.domain.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 
 import java.util.Optional;
 

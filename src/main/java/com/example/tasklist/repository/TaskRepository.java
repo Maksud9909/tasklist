@@ -3,7 +3,6 @@ package com.example.tasklist.repository;
 import com.example.tasklist.domain.task.Task;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 import java.util.Optional;
 @Mapper

@@ -7,6 +7,7 @@ import com.example.tasklist.repository.UserRepository;
 import com.example.tasklist.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder; // так как будем кодировать пароль
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "UserService::getById", key = "#id")
     public User getById(Long id) {
         return userRepository.findUserById(id).orElseThrow(()-> new ResourceNotFoundException("User nor found"));
     }

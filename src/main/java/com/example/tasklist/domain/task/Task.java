@@ -2,10 +2,11 @@ package com.example.tasklist.domain.task;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-
+ // нужно указать, что наш класс сериализован, чтобы redis было легче.
 @Data
-public class Task {
+public class Task implements Serializable {
     private Long id;
 
     private String title;
