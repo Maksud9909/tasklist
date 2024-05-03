@@ -1,6 +1,15 @@
 
 # мы здесь показали, как нужно подключаться к бд
 spring:
+  #инфо об кэше
+  cache:
+    type: redis
+    cache-names: redis-cache
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
   datasource:
     url: jdbc:postgresql://localhost:5433/postgres?currentSchema=public
     username: postgres

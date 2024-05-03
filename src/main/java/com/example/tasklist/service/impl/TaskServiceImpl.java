@@ -6,6 +6,10 @@ import com.example.tasklist.domain.task.Task;
 import com.example.tasklist.repository.TaskRepository;
 import com.example.tasklist.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +22,21 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(readOnly = true) // когда идут get запросы мы пишем read only true
+    @Cacheable(value = "TaskService::getById", key = "#id")
     public Task getById(Long id) {
         return taskRepository.findTaskById(id).orElseThrow(()->new ResourceNotFoundException("Task not found"));
     }
 
     @Override
     @Transactional(readOnly = true) // когда идут get запросы мы пишем read only true
+    // в этом методе кэшировать не выгодно, из-за того, что мы возвращаем List<Task>, их постоянно обновлять не выгодно
     public List<Task> getAllByUserId(Long id) {
         return taskRepository.findAllTasksByUserId(id);
     }
 
     @Override
     @Transactional
+    @CachePut(value = "TaskService::getById", key = "#task.id")
     public Task update(Task task) {
         if (task.getStatus() == null){
             task.setStatus(Status.TODO);
@@ -40,6 +47,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
+    @Cacheable(value = "TaskService::getById", key = "#task.id") // поместиться в кэш сразу после создания
     public Task create(Task task,Long userId) {
         task.setStatus(Status.TODO); // когда только создается задача, то сразу стоит to do
         taskRepository.createTask(task);
@@ -47,14 +55,10 @@ public class TaskServiceImpl implements TaskService {
         return task;
     }
 
-    @Override
-    @Transactional
-    public boolean isTaskOwner(Long userId, Long taskId) {
-        return false; // TODO
-    }
 
     @Override
     @Transactional
+    @CacheEvict(value = "TaskService::getById", key = "#id")
     public void delete(Long id) {
         taskRepository.deleteTask(id);
     }

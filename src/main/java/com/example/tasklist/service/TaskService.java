@@ -15,7 +15,5 @@ public interface TaskService {
 
     Task create(Task task,Long userId);
 
-    boolean isTaskOwner(Long userId,Long taskId);
-
     void delete(Long id);
 }
