@@ -58,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "TaskService::getById", key = "#id")
+    @CacheEvict(value = "TaskService::getById", key = "#id") // поместиться в кэш сразу после удаления
     public void delete(Long id) {
         taskRepository.deleteTask(id);
     }

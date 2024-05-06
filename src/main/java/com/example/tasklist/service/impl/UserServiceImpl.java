@@ -7,7 +7,6 @@ import com.example.tasklist.repository.UserRepository;
 import com.example.tasklist.service.UserService;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Cascade;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
