@@ -148,12 +148,5 @@ public class ApplicationConfig {
         return httpSecurity.build(); // фильтр будет обрабатывать токены JWT, выполнять аутентификацию и устанавливать контекст
     }
 
-//    @Bean
-//    public SpringLiquibase liquibase() {
-//        SpringLiquibase liquibase = new SpringLiquibase();
-//        liquibase.setDataSource(dataSource);
-//        liquibase.setChangeLog("classpath:liquibase/db.changelog.yaml"); // Путь к вашему файлу changelog
-////        liquibase.setContexts("development,test,production"); // Опционально: Контексты применения changelog
-//        return (SpringLiquibase) liquibase.getDataSource();
-//    }
+
 }

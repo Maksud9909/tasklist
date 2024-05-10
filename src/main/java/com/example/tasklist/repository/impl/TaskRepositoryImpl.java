@@ -26,7 +26,7 @@ public class TaskRepositoryImpl implements TaskRepository {
             select t.id as task_id,
                    t.title as task_title,
                    t.description as task_description,
-                   t.expirationdate as task_expiration_date,
+                   t.expiration_date as task_expiration_date,
                    t.status as task_status
                    from tasks t where t.id = ?""";
 
@@ -34,7 +34,7 @@ public class TaskRepositoryImpl implements TaskRepository {
        select t.id as task_id,
        t.title as task_title,
        t.description as task_description,
-       t.expirationdate as task_expiration_date,
+       t.expiration_date as task_expiration_date,
        t.status as task_status
        from tasks t
 join users_tasks ut on t.id = ut.task_id
@@ -53,13 +53,13 @@ join users_tasks ut on t.id = ut.task_id
             update tasks
             set title = ?,
                 description = ?,
-                expirationdate = ?,
+                expiration_date = ?,
                 status = ?
             where id = ?""";
 
 
     private final String CREATE = """
-            insert into tasks (title, description,expirationdate,status)
+            insert into tasks (title, description,expiration_date,status)
             values (?,?,?,?)""";
 
     @Override

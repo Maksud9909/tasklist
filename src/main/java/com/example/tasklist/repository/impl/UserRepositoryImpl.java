@@ -35,12 +35,12 @@ public class UserRepositoryImpl implements UserRepository {
                    t.id as task_id,
                    t.title as task_title,
                    t.description as task_description,
-                   t.expirationdate as task_expiration_date,
+                   t.expiration_date as task_expiration_date,
                    t.status as task_status
             from users u
-            left join public.users_role ur on u.id = ur.user_id
-            left join public.users_tasks ut on u.id = ut.user_id
-            left join public.tasks t on ut.task_id = t.id
+            left join tasklist.users_roles ur on u.id = ur.user_id
+            left join tasklist.users_tasks ut on u.id = ut.user_id
+            left join tasklist.tasks t on ut.task_id = t.id
             where u.id = ?
             """;
 
@@ -53,10 +53,10 @@ public class UserRepositoryImpl implements UserRepository {
                            t.id as task_id,
                            t.title as task_title,
                            t.description as task_description,
-                           t.expirationdate as task_expiration_date,
+                           t.expiration_date as task_expiration_date,
                            t.status as task_status
                     from users u
-                    left join users_role ur on u.id = ur.user_id
+                    left join users_roles ur on u.id = ur.user_id
                     left join users_tasks ut on u.id = ut.user_id
                     left join tasks t on ut.task_id = t.id
                     where u.username = ?

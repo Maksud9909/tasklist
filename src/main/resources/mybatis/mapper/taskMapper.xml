@@ -15,7 +15,7 @@
         select t.id as task_id,
         t.title as task_title,
         t.description as task_description,
-        t.expirationdate as task_expiration_date,
+        t.expiration_date as task_expiration_date,
         t.status as task_status
         from tasks t where t.id = #{id}
 <!--        Через решетку мы получаем параметр айди-->
@@ -26,7 +26,7 @@
         select t.id as task_id,
         t.title as task_title,
         t.description as task_description,
-        t.expirationdate as task_expiration_date,
+        t.expiration_date as task_expiration_date,
         t.status as task_status
         from tasks t
         join users_tasks ut on t.id = ut.task_id
@@ -35,8 +35,8 @@
 
 <!--    Здесь идет insert, и айдишка -->
     <insert id="createTask" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
-        insert into tasks (title,description,expirationdate,status)
-        values (#{title},#{description},#{expirationDate},#{status})
+        insert into tasks (title,description,expiration_date,status)
+        values (#{title},#{description},#{expiration_date},#{status})
     </insert>
     
     <insert id="assignTasksToUserById">
@@ -48,7 +48,7 @@
         update tasks
         set title = #{title},
         description = #{description},
-        expirationdate = #{expirationDate},
+        expiration_date = #{expiration_date},
         status = #{status}
         where id = #{id}
     </update>

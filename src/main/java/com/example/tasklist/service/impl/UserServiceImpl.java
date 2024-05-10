@@ -7,10 +7,6 @@ import com.example.tasklist.repository.UserRepository;
 import com.example.tasklist.service.UserService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,25 +20,25 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder; // так как будем кодировать пароль
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "UserService::getById", key = "#id")
+//    @Cacheable(value = "UserService::getById", key = "#id")
     public User getById(Long id) {
         return userRepository.findUserById(id).orElseThrow(()-> new ResourceNotFoundException("User nor found"));
     }
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "UserService::getByUsername", key = "#username")
+//    @Cacheable(value = "UserService::getByUsername", key = "#username")
     public User getByUsername(String username) {
         return userRepository.findUserByUserName(username).orElseThrow(()-> new ResourceNotFoundException("Username not found"));
     }
 
     @Override
     @Transactional
-    @Caching(put = {
-            // тут как юзер будет обновляться, то тогда он его данные обновятся в оперативке тоже
-            @CachePut(value = "UserService::getById", key = "#user.id"),
-            @CachePut(value = "UserService::getByUsername", key = "#user.username")
-    })
+//    @Caching(put = {
+//            // тут как юзер будет обновляться, то тогда он его данные обновятся в оперативке тоже
+//            @CachePut(value = "UserService::getById", key = "#user.id"),
+//            @CachePut(value = "UserService::getByUsername", key = "#user.username")
+//    })
     public User update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword())); // хешированный пароль
         userRepository.updateUser(user);
@@ -51,11 +47,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    @Caching(cacheable = {
-            // тут как юзер будет обновляться, то тогда он его данные обновятся в оперативке тоже
-            @Cacheable(value = "UserService::getById", key = "#user.id"),
-            @Cacheable(value = "UserService::getByUsername", key = "#user.username")
-    })
+//    @Caching(cacheable = {
+//            // тут как юзер будет обновляться, то тогда он его данные обновятся в оперативке тоже
+//            @Cacheable(value = "UserService::getById", key = "#user.id"),
+//            @Cacheable(value = "UserService::getByUsername", key = "#user.username")
+//    })
     public User create(User user) {
         if (userRepository.findUserByUserName(user.getUsername()).isPresent()){ // есть ли такой пользователь в базе
             throw new IllegalStateException("User is already existing");
@@ -78,14 +74,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "UserService::isTaskOwner", key = "#userId + '.' + #taskId")
+//    @Cacheable(value = "UserService::isTaskOwner", key = "#userId + '.' + #taskId")
     public boolean isTaskOwner(Long userId, Long taskId) {
         return userRepository.isUserTaskOwner(userId,taskId);
     }
 
     @Override
     @Transactional
-    @CacheEvict(value = "UserService::getById", key = "#id")
+//    @CacheEvict(value = "UserService::getById", key = "#id")
     public void delete(Long id) {
         userRepository.deleteUser(id);
     }
