@@ -83,7 +83,7 @@ public class UserController {
      */
 
     @PostMapping("/{id}/tasks")
-    @Operation(summary = "Create User")
+    @Operation(summary = "Create Task")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto dto) {
         Task task = taskMapper.taskToEntity(dto);

@@ -35,7 +35,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * правила авторизации для различных URL-путей,
  * а также фильтры безопасности.
  */
-@Configuration // место где собираются все бины
+@Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true) // он разрешает пользоваться безопасностью через методы
 @RequiredArgsConstructor(onConstructor = @__(@Lazy)) // сразу пишет конструктор для всех final переменных, когда переменная понадобится он тогда ее внедрит

@@ -2,7 +2,6 @@ package com.example.tasklist.domain.user;
 
 import com.example.tasklist.domain.task.Task;
 import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -23,5 +22,4 @@ public class User implements Serializable {  // нужно указать, чт�
     private Set<Role> roles; // Roles like Admin or User
 
     private List<Task>tasks; // list of tasks
-
 }

@@ -19,7 +19,7 @@ public class JwtRequest {
     /**
      * Password entered during authentication.
      */
-    @Schema(description = "password", example = "123")
+    @Schema(description = "password", example = "12345")
     @NotNull(message = "Password must be not null.")
     private String password;
 }
