@@ -5,6 +5,9 @@ import com.example.tasklist.domain.task.Status;
 import com.example.tasklist.domain.task.Task;
 import com.example.tasklist.repository.TaskRepository;
 import com.example.tasklist.service.TaskService;
+//import org.springframework.cache.annotation.CacheEvict;
+//import org.springframework.cache.annotation.CachePut;
+//import org.springframework.cache.annotation.Cacheable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -23,9 +26,15 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findTaskById(id).orElseThrow(()->new ResourceNotFoundException("Task not found"));
     }
 
+
+    /**
+     * в этом методе кэшировать не выгодно, из-за того,
+     * что мы возвращаем List<Task>, их постоянно обновлять не выгодно
+     * @param id
+     * @return
+     */
     @Override
     @Transactional(readOnly = true) // когда идут get запросы мы пишем read only true
-    // в этом методе кэшировать не выгодно, из-за того, что мы возвращаем List<Task>, их постоянно обновлять не выгодно
     public List<Task> getAllByUserId(Long id) {
         return taskRepository.findAllTasksByUserId(id);
     }

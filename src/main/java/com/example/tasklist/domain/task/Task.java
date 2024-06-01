@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
- // нужно указать, что наш класс сериализован, чтобы redis было легче.
+
 @Data
 public class Task implements Serializable {
     private Long id;
@@ -13,7 +13,7 @@ public class Task implements Serializable {
 
     private String description;
 
-    private Status status; // status is done, not or in the process
+    private Status status;
 
-    private LocalDateTime expirationDate; // when you have to end this task
+    private LocalDateTime expirationDate;
 }

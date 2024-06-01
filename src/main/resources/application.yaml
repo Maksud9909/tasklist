@@ -1,6 +1,14 @@
 
 #postgres?currentSchema=
 spring:
+#  cache:
+#    type: redis
+#    cache-names: redis-cache
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379
+#      password: cXdlcXdl
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=tasklist
     username: postgres
@@ -38,10 +46,3 @@ springdoc:
 
 
 
-
-#       это настройка sql, она будет выполняться всегда
-#    sql:
-#      init:
-#        mode: never # never потому-что теперь у нас liquibase
-#        continue-on-error: false # если будет ошибка, то будет останавливаться
-#  #      data-locations: classpath:demo_data.sql

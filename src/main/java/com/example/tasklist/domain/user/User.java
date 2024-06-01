@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-@Data // она за нас пишет getter,setter,toString,equals,hashcode,constructor
-public class User implements Serializable {  // нужно указать, что наш класс сериализован, чтобы redis было легче.
+@Data
+public class User implements Serializable {
 
     private Long id;
 
@@ -17,9 +17,9 @@ public class User implements Serializable {  // нужно указать, чт�
 
     private String password;
 
-    private String confirmationOfPassword; // passwordConfirmationByEmail
+    private String confirmationOfPassword;
 
-    private Set<Role> roles; // Roles like Admin or User
+    private Set<Role> roles;
 
-    private List<Task>tasks; // list of tasks
+    private List<Task>tasks;
 }

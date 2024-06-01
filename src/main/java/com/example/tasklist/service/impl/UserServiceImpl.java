@@ -5,7 +5,8 @@ import com.example.tasklist.domain.user.Role;
 import com.example.tasklist.domain.user.User;
 import com.example.tasklist.repository.UserRepository;
 import com.example.tasklist.service.UserService;
-
+//import org.springframework.cache.annotation.*;
+//import org.springframework.cache.annotation.Cacheable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
 //    @Caching(put = {
 //            // тут как юзер будет обновляться, то тогда он его данные обновятся в оперативке тоже
-//            @CachePut(value = "UserService::getById", key = "#user.id"),
+//            @CachePut(value = "UserService::getById", key = "#user.id"), // при обновлении
 //            @CachePut(value = "UserService::getByUsername", key = "#user.username")
 //    })
     public User update(User user) {
@@ -47,8 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-//    @Caching(cacheable = {
-//            // тут как юзер будет обновляться, то тогда он его данные обновятся в оперативке тоже
+//    @Caching(cacheable = { // при создание пишется cacheable
 //            @Cacheable(value = "UserService::getById", key = "#user.id"),
 //            @Cacheable(value = "UserService::getByUsername", key = "#user.username")
 //    })
