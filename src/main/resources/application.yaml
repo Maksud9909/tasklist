@@ -1,14 +1,14 @@
 
-#postgres?currentSchema=
+
 spring:
-#  cache:
-#    type: redis
-#    cache-names: redis-cache
-#  data:
-#    redis:
-#      host: localhost
-#      port: 6379
-#      password: cXdlcXdl
+  cache:
+    type: redis
+    cache-names: redis-cache
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: a2RsZmtkamFz
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=tasklist
     username: postgres

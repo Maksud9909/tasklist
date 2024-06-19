@@ -9,12 +9,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-//@EnableCaching
-//@EnableScheduling
+@EnableCaching
+@EnableScheduling
 public class TasklistApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(TasklistApplication.class, args);
 	}
-
 }

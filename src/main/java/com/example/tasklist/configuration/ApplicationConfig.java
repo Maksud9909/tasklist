@@ -147,6 +147,4 @@ public class ApplicationConfig {
                 .addFilterBefore(new JwtTokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build(); // фильтр будет обрабатывать токены JWT, выполнять аутентификацию и устанавливать контекст
     }
-
-
 }
