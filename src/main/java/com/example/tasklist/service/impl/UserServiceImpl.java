@@ -23,14 +23,14 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Cacheable(value = "UserService::getById", key = "#id")
     public User getById(Long id) {
-        return userRepository.findUserById(id).orElseThrow(()-> new ResourceNotFoundException("User nor found"));
+        return userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User nor found"));
     }
 
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "UserService::getByUsername", key = "#username")
     public User getByUsername(String username) {
-        return userRepository.findUserByUserName(username).orElseThrow(()-> new ResourceNotFoundException("Username not found"));
+        return userRepository.findUserByUsername(username).orElseThrow(()-> new ResourceNotFoundException("Username not found"));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     })
     public User update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword())); // хешированный пароль
-        userRepository.updateUser(user);
+        userRepository.save(user);
         return user;
     }
 
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
             @Cacheable(value = "UserService::getByUsername", key = "#user.username")
     })
     public User create(User user) {
-        if (userRepository.findUserByUserName(user.getUsername()).isPresent()){ // есть ли такой пользователь в базе
+        if (userRepository.findUserByUsername(user.getUsername()).isPresent()){ // есть ли такой пользователь в базе
             throw new IllegalStateException("User is already existing");
         }
         if (!user.getPassword().equals(user.getConfirmationOfPassword())){ // если ввести неправильный пароль
@@ -62,13 +62,12 @@ public class UserServiceImpl implements UserService {
 
         // в остальных случаях будет это
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.createUser(user);
 
 
         Set<Role> roles = Set.of(Role.ROLE_USER);
-        userRepository.insertUserRole(user.getId(), Role.ROLE_USER); // по дефолту при рег идет юзер
-        user.setRoles(roles);
 
+        user.setRoles(roles);
+        userRepository.save(user);
         return user;
     }
 
@@ -83,6 +82,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @CacheEvict(value = "UserService::getById", key = "#id")
     public void delete(Long id) {
-        userRepository.deleteUser(id);
+        userRepository.deleteById(id);
     }
 }

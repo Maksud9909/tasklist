@@ -26,9 +26,7 @@ spring:
     default-schema: tasklist
 
 
-# мы тут описали, локацию описание этого файла
-mybatis:
-  mapper-locations: classpath:mybatis/mapper/*.xml
+
 
 
 security:

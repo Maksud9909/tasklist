@@ -3,8 +3,10 @@ package com.example.tasklist.service.impl;
 import com.example.tasklist.domain.exception.ResourceNotFoundException;
 import com.example.tasklist.domain.task.Status;
 import com.example.tasklist.domain.task.Task;
+import com.example.tasklist.domain.user.User;
 import com.example.tasklist.repository.TaskRepository;
 import com.example.tasklist.service.TaskService;
+import com.example.tasklist.service.UserService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -18,12 +20,13 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserService userService;
 
     @Override
     @Transactional(readOnly = true) // когда идут get запросы мы пишем read only true
     @Cacheable(value = "TaskService::getById", key = "#id")
     public Task getById(Long id) {
-        return taskRepository.findTaskById(id).orElseThrow(()->new ResourceNotFoundException("Task not found"));
+        return taskRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Task not found"));
     }
 
 
@@ -46,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
         if (task.getStatus() == null){
             task.setStatus(Status.TODO);
         }
-        taskRepository.updateTask(task);
+        taskRepository.save(task);
         return task;
     }
 
@@ -54,9 +57,10 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Cacheable(value = "TaskService::getById", key = "#task.id") // поместиться в кэш сразу после создания
     public Task create(Task task,Long userId) {
+        User user = userService.getById(userId);
         task.setStatus(Status.TODO); // когда только создается задача, то сразу стоит to do
-        taskRepository.createTask(task);
-        taskRepository.assignTasksToUserById(task.getId(),userId); // соеденяем таск с юзером
+        user.getTasks().add(task);
+        userService.update(user);
         return task;
     }
 
@@ -65,6 +69,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @CacheEvict(value = "TaskService::getById", key = "#id") // поместиться в кэш сразу после удаления
     public void delete(Long id) {
-        taskRepository.deleteTask(id);
+        taskRepository.deleteById(id);
     }
 }

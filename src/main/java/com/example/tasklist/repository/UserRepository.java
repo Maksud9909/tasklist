@@ -2,28 +2,30 @@ package com.example.tasklist.repository;
 
 import com.example.tasklist.domain.user.Role;
 import com.example.tasklist.domain.user.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 
 import java.util.Optional;
 
 
-@Mapper
-public interface UserRepository {
-    Optional<User> findUserById(Long id); // Если пользователь существует, он будет обернут в Optional, в противном случае Optional будет пустым.
 
-    // Если пользователь существует, он будет обернут в Optional, в противном случае Optional будет пустым.
-    Optional<User> findUserByUserName(String username);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findUserByUsername(String username); // Change userName to username
 
-    void updateUser(User user); // она будет добавлять юзера, или update если он уже есть.
 
-    void createUser(User user); // он создает нового юзера
 
-    void insertUserRole(@Param("userId") Long userId, @Param("role")Role role); // роль которую будем давать юзеру
 
-    // он будет проверять, является ли юзер владельцом этого задания. Также, это создано, чтобы другие юзеры не имели доступ к заданию.
-    boolean isUserTaskOwner(@Param("userId")Long userId, @Param("taskId")Long taskId);
 
-    void deleteUser(Long id);
+    @Query(value = """
+        SELECT exists(
+                SELECT 1
+                FROM users_tasks
+                WHERE user_id = :userId
+                AND task_id = :taskId
+            )
+""",nativeQuery = true)
+    boolean isUserTaskOwner(@Param("userId") Long userId, @Param("taskId")Long taskId);
+
 }

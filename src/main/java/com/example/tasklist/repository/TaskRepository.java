@@ -1,21 +1,22 @@
 package com.example.tasklist.repository;
 
 import com.example.tasklist.domain.task.Task;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
-import java.util.Optional;
-@Mapper
-public interface TaskRepository {
-    Optional<Task> findTaskById(Long id); // Если задача существует, она будет обернута в Optional, в противном случае Optional будет пустым.
 
-    List<Task> findAllTasksByUserId(Long userId);// Этот метод предполагает, что каждая задача привязана к конкретному пользователю.
-    // аннотция param, сделана для того, чтобы myBatis мог его прочитать
-    void assignTasksToUserById(@Param("taskId") Long taskId,@Param("userId") Long userId); // он будет соединять юзера и таску
 
-    void updateTask(Task task); // метод, который обновляет информацию об задаче
+public interface TaskRepository extends JpaRepository<Task,Long> {
 
-    void createTask(Task task); // он добавляет задачу в базу данных
 
-    void deleteTask(Long id); // удаляет задачу через ее айди
+
+    @Query(value = """
+         SELECT * from tasks as t 
+         JOIN users_tasks as ut ON ut.task_id = t.id
+         WHERE ut.user_id = :userId
+         """,nativeQuery = true)
+    List<Task> findAllTasksByUserId(@Param("userId") Long userId);// Этот метод предполагает, что каждая задача привязана к конкретному пользователю.
+
 }

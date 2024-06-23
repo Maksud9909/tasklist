@@ -1,22 +1,22 @@
 package com.example.tasklist.domain.task;
 
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
+@Entity
+@Table(name = "tasks")
 public class Task implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String title;
-
     private String description;
-
+    @Enumerated(value = EnumType.STRING)
     private Status status;
-
-    @Getter
     private LocalDateTime expirationDate;
 
 }
